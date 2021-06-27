@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -32,9 +31,6 @@ public class VhsControllerTests {
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
-	@Value("{title.invalid}")
-	private String invalidTitleMessage;
-	
 	@Test
 	public void getAllVhsesTest() throws Exception {
 		Vhs vhs1 = new Vhs(1, "Test 1", "Test 1", 1990);
@@ -46,7 +42,7 @@ public class VhsControllerTests {
 		
 		when(vhsService.getAllVhses()).thenReturn(vhses);
 		
-		mockMvc.perform(get("/api/vhs"))
+		mockMvc.perform(get("/api/vhses"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(objectMapper.writeValueAsString(vhses)));
 	}
@@ -57,7 +53,7 @@ public class VhsControllerTests {
 		
 		when(vhsService.getVhs(1)).thenReturn(vhs);
 		
-		mockMvc.perform(get("/api/vhs/1"))
+		mockMvc.perform(get("/api/vhses/1"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(objectMapper.writeValueAsString(vhs)));
 		
@@ -67,7 +63,7 @@ public class VhsControllerTests {
 	public void getNonExistingVhsTest() throws Exception {
 		when(vhsService.getVhs(1)).thenReturn(null);
 		
-		mockMvc.perform(get("/api/vhs/1"))
+		mockMvc.perform(get("/api/vhses/1"))
 			.andExpect(status().isNotFound());
 	}
 	
@@ -78,7 +74,7 @@ public class VhsControllerTests {
 		
 		when(vhsService.addVhs(vhsDto)).thenReturn(vhs);
 		
-		mockMvc.perform(post("/api/vhs")
+		mockMvc.perform(post("/api/vhses")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(vhsDto)))
 			.andExpect(status().isCreated())
@@ -89,7 +85,7 @@ public class VhsControllerTests {
 	public void addVhsWithInvalidTitleTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("", "Test 1", 1990);
 		
-		mockMvc.perform(post("/api/vhs")
+		mockMvc.perform(post("/api/vhses")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(vhsDto)))
 			.andExpect(status().isBadRequest());
@@ -99,7 +95,7 @@ public class VhsControllerTests {
 	public void addVhsWithInvalidYearTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("Test 1", "Test 1", 1);
 		
-		mockMvc.perform(post("/api/vhs")
+		mockMvc.perform(post("/api/vhses")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(vhsDto)))
 			.andExpect(status().isBadRequest());
@@ -112,7 +108,7 @@ public class VhsControllerTests {
 		
 		when(vhsService.updateVhs(1, vhsDto)).thenReturn(vhs);
 		
-		mockMvc.perform(put("/api/vhs/1")
+		mockMvc.perform(put("/api/vhses/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(vhsDto)))
 			.andExpect(status().isOk())
@@ -125,7 +121,7 @@ public class VhsControllerTests {
 		
 		when(vhsService.updateVhs(1, vhsDto)).thenReturn(null);
 		
-		mockMvc.perform(put("/api/vhs/1")
+		mockMvc.perform(put("/api/vhses/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(vhsDto)))
 			.andExpect(status().isBadRequest());
@@ -137,7 +133,7 @@ public class VhsControllerTests {
 		
 		when(vhsService.updateVhs(1, vhsDto)).thenReturn(null);
 		
-		mockMvc.perform(put("/api/vhs/1")
+		mockMvc.perform(put("/api/vhses/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(vhsDto)))
 			.andExpect(status().isBadRequest());
@@ -149,7 +145,7 @@ public class VhsControllerTests {
 		
 		when(vhsService.updateVhs(1, vhsDto)).thenReturn(null);
 		
-		mockMvc.perform(put("/api/vhs/1")
+		mockMvc.perform(put("/api/vhses/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(vhsDto)))
 			.andExpect(status().isNotFound());
@@ -159,14 +155,14 @@ public class VhsControllerTests {
 	public void deleteVhsSuccessTest() throws Exception {
 		when(vhsService.deleteVhs(1)).thenReturn(true);
 		
-		mockMvc.perform(delete("/api/vhs/1")).andExpect(status().isNoContent());
+		mockMvc.perform(delete("/api/vhses/1")).andExpect(status().isNoContent());
 	}
 	
 	@Test
 	public void deleteNonExistingVhsTest() throws Exception {
 		when(vhsService.deleteVhs(1)).thenReturn(false);
 		
-		mockMvc.perform(delete("/api/vhs/1")).andExpect(status().isNotFound());
+		mockMvc.perform(delete("/api/vhses/1")).andExpect(status().isNotFound());
 	}
 	
 }

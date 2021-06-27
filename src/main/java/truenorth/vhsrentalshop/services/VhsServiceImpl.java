@@ -6,11 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import truenorth.vhsrentalshop.model.Vhs;
 import truenorth.vhsrentalshop.model.VhsDto;
 import truenorth.vhsrentalshop.repositories.VhsRepository;
 
 @Service
+@Slf4j
 public class VhsServiceImpl implements VhsService {
 	
 	private VhsRepository vhsRepository;
@@ -63,6 +65,10 @@ public class VhsServiceImpl implements VhsService {
 	@Override
 	public boolean deleteVhs(int id) {
 		if(vhsRepository.existsById(id)) {
+			Vhs vhs = vhsRepository.findById(id).get();
+			
+			log.info(String.format("Delete vhs: %s", vhs.toString()));
+			
 			vhsRepository.deleteById(id);
 			
 			return true;

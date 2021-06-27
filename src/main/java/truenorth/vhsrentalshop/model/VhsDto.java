@@ -67,5 +67,10 @@ public class VhsDto {
 		
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("title: %s, year: %d", title, year);
+	}
 
 }

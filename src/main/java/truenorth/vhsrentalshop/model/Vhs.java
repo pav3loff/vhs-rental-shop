@@ -93,6 +93,6 @@ public class Vhs {
 	
 	@Override
 	public String toString() {
-		return String.format("%s (%d)", this.title, this.year);
+		return String.format("id: %d, title: %s, year: %d", id, title, year);
 	}
 }

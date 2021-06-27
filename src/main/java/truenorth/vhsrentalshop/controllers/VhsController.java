@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,13 +14,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
 import truenorth.vhsrentalshop.model.Vhs;
 import truenorth.vhsrentalshop.model.VhsDto;
 import truenorth.vhsrentalshop.services.VhsService;
 
 @Controller
-@Validated
-@RequestMapping("/api/vhs")
+@RequestMapping("/api/vhses")
+@Slf4j
 public class VhsController {
 	
 	private VhsService vhsService;
@@ -50,11 +50,15 @@ public class VhsController {
 	
 	@PostMapping
 	public ResponseEntity<?> addVhs(@Valid @RequestBody VhsDto vhsDto) {
+		log.info(String.format("Add vhs: %s", vhsDto));
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(vhsService.addVhs(vhsDto));
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateVhs(@PathVariable int id, @Valid @RequestBody VhsDto vhsDto) {
+		log.info(String.format("Update vhs: %s", vhsDto));
+		
 		Vhs vhs = vhsService.updateVhs(id, vhsDto);
 		
 		if(vhs == null) {
@@ -67,6 +71,8 @@ public class VhsController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteVhs(@PathVariable int id) {
+		log.info(String.format("Delete vhs with id %d", id));
+		
 		if(vhsService.deleteVhs(id)) {
 			return ResponseEntity.noContent().build();
 		} 
