@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,13 @@ public class RentalController {
 	}
 	
 	@GetMapping
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllRentals() {
 		return ResponseEntity.ok(rentalService.getAllRentals());
 	}
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getRental(@PathVariable int id) {
 		Rental rental = rentalService.getRental(id);
 		
@@ -49,17 +52,21 @@ public class RentalController {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addRental(@Valid @RequestBody RentalDto rentalDto) {
-		log.info(String.format("Add rental: %s", rentalDto));
-		
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(rentalService.addRental(rentalDto));
+			Rental rental = rentalService.addRental(rentalDto);
+			
+			log.info(String.format("Add rental: %s", rental));
+			
+			return ResponseEntity.status(HttpStatus.CREATED).body(rental);
 		} catch(IllegalArgumentException exc) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exc.getMessage());
 		}
 	}
 	
 	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> returnRental(@PathVariable int id) {
 		log.info(String.format("Return rental with id %d", id));
 		
@@ -74,6 +81,7 @@ public class RentalController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteRental(@PathVariable int id) {
 		log.info(String.format("Delete rental with id %d", id));
 		

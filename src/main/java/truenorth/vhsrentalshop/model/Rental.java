@@ -146,8 +146,8 @@ public class Rental {
 	
 	@Override
 	public String toString() {
-		return String.format("id: %d, user: %s %s, vhs: %s (%d)", 
-				id, user.getFirstName(), user.getLastName(), vhs.getTitle(), vhs.getYear());
+		return String.format("id: %d, user: %s, vhs: %s (%d)", 
+				id, user.getUsername(), vhs.getTitle(), vhs.getYear());
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
@@ -32,6 +33,7 @@ public class VhsControllerTests {
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void getAllVhsesTest() throws Exception {
 		Vhs vhs1 = new Vhs(1, "Test 1", "Test 1", 1990);
 		Vhs vhs2 = new Vhs(2, "Test 2", "Test 2", 1991);
@@ -48,6 +50,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void getVhsSuccessTest() throws Exception {
 		Vhs vhs = new Vhs(1, "Test 1", "Test 1", 1990);
 		
@@ -60,6 +63,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void getNonExistingVhsTest() throws Exception {
 		when(vhsService.getVhs(1)).thenReturn(null);
 		
@@ -68,6 +72,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void addVhsSuccessTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("Test 1", "Test 1", 1990);
 		Vhs vhs = new Vhs(1, "Test 1", "Test 1", 1990);
@@ -82,6 +87,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void addVhsWithInvalidTitleTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("", "Test 1", 1990);
 		
@@ -92,6 +98,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void addVhsWithInvalidYearTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("Test 1", "Test 1", 1);
 		
@@ -102,6 +109,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test 
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void updateVhsSuccessTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("Test 1 Updated", "Test 1 Updated", 1991);
 		Vhs vhs = new Vhs(1, "Test 1 Updated", "Test 1 Updated", 1991);
@@ -116,6 +124,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test 
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void updateVhsWithInvalidTitleTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("", "Test 1 Updated", 1991);
 		
@@ -128,6 +137,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test 
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void updateVhsWithInvalidYearTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("Test 1 Updated", "Test 1 Updated", 1);
 		
@@ -140,6 +150,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void updateNonExistingVhsTest() throws Exception {
 		VhsDto vhsDto = new VhsDto("Test 1 Updated", "Test 1 Updated", 1991);
 		
@@ -152,6 +163,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void deleteVhsSuccessTest() throws Exception {
 		when(vhsService.deleteVhs(1)).thenReturn(true);
 		
@@ -159,6 +171,7 @@ public class VhsControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void deleteNonExistingVhsTest() throws Exception {
 		when(vhsService.deleteVhs(1)).thenReturn(false);
 		

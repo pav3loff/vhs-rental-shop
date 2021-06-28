@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import truenorth.vhsrentalshop.model.Rental;
 import truenorth.vhsrentalshop.model.RentalDto;
+import truenorth.vhsrentalshop.model.Role;
 import truenorth.vhsrentalshop.model.User;
 import truenorth.vhsrentalshop.model.Vhs;
 import truenorth.vhsrentalshop.services.RentalService;
@@ -51,9 +53,10 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void getAllRentalsTest() throws Exception {
-		User user1 = new User(1, "Test 1", "Test 1", new LinkedList<>());
-		User user2 = new User(1, "Test 2", "Test 2", new LinkedList<>());
+		User user1 = new User(1, "test1", "pass1", "Test 1", "Test 1", new LinkedList<>(), Role.USER);
+		User user2 = new User(2, "test2", "pass2", "Test 2", "Test 2", new LinkedList<>(), Role.USER);
 		
 		Vhs vhs1 = new Vhs(1, "Test 1", "Test 1", 1990);
 		Vhs vhs2 = new Vhs(2, "Test 2", "Test 2", 1991);
@@ -76,8 +79,9 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void getRentalSuccessTest() throws Exception {
-		User user = new User(1, "Test 1", "Test 1", new LinkedList<>());
+		User user = new User(1, "test", "pass", "Test 1", "Test 1", new LinkedList<>(), Role.USER);
 		
 		Vhs vhs = new Vhs(1, "Test 1", "Test 1", 1990);
 		
@@ -94,6 +98,7 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void getNonExistingRentalTest() throws Exception {
 		when(rentalService.getRental(1)).thenReturn(null);
 		
@@ -102,12 +107,13 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void addRentalSuccessTest() throws Exception {
-		User user = new User(1, "Test 1", "Test 1", new LinkedList<>());
+		User user = new User(1, "test", "pass", "Test 1", "Test 1", new LinkedList<>(), Role.USER);
 		
 		Vhs vhs = new Vhs(1, "Test 1", "Test 1", 1990);
 		
-		RentalDto rentalDto = new RentalDto(1, 1);
+		RentalDto rentalDto = new RentalDto("test", 1);
 		LocalDateTime dateRented = LocalDateTime.of(2020, 1, 1, 1, 1);
 		LocalDateTime dueDate = LocalDateTime.of(2020, 2, 1, 1, 1);
 		
@@ -123,8 +129,9 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void addRentalWithNonExistingUserTest() throws Exception {
-		RentalDto rentalDto = new RentalDto(1, 1);
+		RentalDto rentalDto = new RentalDto("test", 1);
 		
 		when(rentalService.addRental(rentalDto)).thenThrow(new IllegalArgumentException());
 		
@@ -135,8 +142,9 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void addRentalWithNonExistingVhsTest() throws Exception {
-		RentalDto rentalDto = new RentalDto(1, 1);
+		RentalDto rentalDto = new RentalDto("test", 1);
 		
 		when(rentalService.addRental(rentalDto)).thenThrow(new IllegalArgumentException());
 		
@@ -147,8 +155,9 @@ public class RentalControllerTests {
 	}
 	
 	@Test 
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void returnRentalTest() throws Exception {
-		User user = new User(1, "Test 1", "Test 1", new LinkedList<>());
+		User user = new User(1, "test", "pass", "Test 1", "Test 1", new LinkedList<>(), Role.USER);
 		
 		Vhs vhs = new Vhs(1, "Test 1", "Test 1", 1990);
 		
@@ -167,6 +176,7 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void returnNonExistingRentalTest() throws Exception {
 		when(rentalService.returnRental(1)).thenReturn(null);
 		
@@ -176,6 +186,7 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void deleteRentalSuccessTest() throws Exception {
 		when(rentalService.deleteRental(1)).thenReturn(true);
 		
@@ -183,6 +194,7 @@ public class RentalControllerTests {
 	}
 	
 	@Test
+	@WithMockUser(value = "test", roles = {"ADMIN"})
 	public void deleteNonExistingRentalTest() throws Exception {
 		when(rentalService.deleteRental(1)).thenReturn(false);
 		

@@ -61,13 +61,13 @@ public class RentalServiceImpl implements RentalService {
 
 	@Override
 	public Rental addRental(RentalDto rentalDto) {
-		int userId = rentalDto.getUserId();
+		String username = rentalDto.getUsername();
 		
-		if(userRepository.existsById(userId)) {
+		if(userRepository.existsByUsername(username)) {
 			int vhsId = rentalDto.getVhsId();
 			
 			if(vhsRepository.existsById(vhsId)) {
-				User user = userRepository.findById(userId).get();
+				User user = userRepository.findByUsername(username).get();
 				Vhs vhs = vhsRepository.findById(vhsId).get();
 				
 				Rental rental = new Rental(vhs, user, LocalDateTime.now(), 
@@ -79,7 +79,7 @@ public class RentalServiceImpl implements RentalService {
 			throw new IllegalArgumentException(String.format("Vhs with id %d does not exist!", vhsId));
 		}
 		
-		throw new IllegalArgumentException(String.format("User with id %d does not exist!", userId));
+		throw new IllegalArgumentException(String.format("User with username %s does not exist!", username));
 	}
 
 	@Override

@@ -2,19 +2,20 @@ package truenorth.vhsrentalshop.services;
 
 import java.util.List;
 
-import truenorth.vhsrentalshop.model.User;
-import truenorth.vhsrentalshop.model.UserDto;
+import truenorth.vhsrentalshop.model.CreateUserDto;
+import truenorth.vhsrentalshop.model.MyUserDto;
+import truenorth.vhsrentalshop.model.UpdateUserDto;
 
 public interface UserService {
 	
-	List<User> getAllUsers();
+	List<MyUserDto> getAllUsers();
 	
-	User getUser(int id);
+	MyUserDto getUser(String username);
 	
-	User addUser(UserDto userDto);
+	MyUserDto addUser(CreateUserDto createUserDto);
 	
-	User updateUser(int id, UserDto userDto);
+	MyUserDto updateUser(String username, UpdateUserDto updateUserDto);
 	
-	boolean deleteUser(int id);
+	boolean deleteUser(String username);
 
 }

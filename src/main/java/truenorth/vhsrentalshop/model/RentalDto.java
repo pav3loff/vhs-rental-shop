@@ -1,27 +1,28 @@
 package truenorth.vhsrentalshop.model;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class RentalDto {
 	
-	@NotNull
-	private int userId;
+	@NotBlank(message = "{username.invalid}")
+	private String username;
 	
 	@NotNull
 	private int vhsId;
 
-	public RentalDto(int userId, int vhsId) {
+	public RentalDto(String username, int vhsId) {
 		super();
-		this.userId = userId;
+		this.username = username;
 		this.vhsId = vhsId;
 	}
 
-	public int getUserId() {
-		return userId;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public int getVhsId() {
@@ -36,7 +37,7 @@ public class RentalDto {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + userId;
+		result = prime * result + username.hashCode();
 		result = prime * result + vhsId;
 		return result;
 	}
@@ -46,7 +47,7 @@ public class RentalDto {
 		if(obj instanceof RentalDto) {
 			RentalDto other = (RentalDto) obj;
 			
-			return userId == other.userId && vhsId == other.vhsId;
+			return username.equals(other.username) && vhsId == other.vhsId;
 		}
 		
 		return false;
@@ -54,7 +55,7 @@ public class RentalDto {
 	
 	@Override
 	public String toString() {
-		return String.format("userId: %d, vhsId: %d", userId, vhsId);
+		return String.format("username: %s, vhsId: %d", username, vhsId);
 	}
 
 }

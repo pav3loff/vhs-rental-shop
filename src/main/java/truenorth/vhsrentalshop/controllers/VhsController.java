@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,13 @@ public class VhsController {
 	}
 	
 	@GetMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> getAllVhses() {
 		return ResponseEntity.ok(vhsService.getAllVhses());
 	}
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> getVhs(@PathVariable int id) {
 		Vhs vhs = vhsService.getVhs(id);
 		
@@ -49,6 +52,7 @@ public class VhsController {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addVhs(@Valid @RequestBody VhsDto vhsDto) {
 		log.info(String.format("Add vhs: %s", vhsDto));
 		
@@ -56,6 +60,7 @@ public class VhsController {
 	}
 	
 	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateVhs(@PathVariable int id, @Valid @RequestBody VhsDto vhsDto) {
 		log.info(String.format("Update vhs: %s", vhsDto));
 		
@@ -70,6 +75,7 @@ public class VhsController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteVhs(@PathVariable int id) {
 		log.info(String.format("Delete vhs with id %d", id));
 		
