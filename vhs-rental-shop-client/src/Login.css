@@ -1,0 +1,45 @@
+.login-main {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    color: #f1aa9b;
+}
+
+.form {
+    margin-top: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input {
+    text-align: center;
+    width: 295px;
+    height: 40px;
+    margin: 10px;
+    background-color: unset;
+    color: #f1aa9b;
+    border: 1px solid #f1aa9b;
+    border-radius: 5px;
+    font-family: "Roboto";
+    font-size: 15px;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-input:focus,
+.form-input:hover {
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+.label {
+    margin-top: 10px;
+}
+
+.btn-submit {
+    font-family: Arial, Helvetica, sans-serif !important;
+    width: 300px;
+    height: 30px;
+    margin: 20px !important;
+    color: #312c51 !important;
+    background-color: #f1aa9b !important;
+}

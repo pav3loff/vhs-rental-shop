@@ -1,0 +1,24 @@
+.nav {
+    background-color: #312c51 !important;
+}
+
+.leftside {
+    width: 50%;
+}
+
+.rightside {
+    width: 50%;
+    text-align: end;
+}
+
+.link {
+    all: unset;
+}
+
+.nav-btn {
+    font-family: Arial, Helvetica, sans-serif !important;
+    height: 30px !important;
+    margin: 0px 5px !important;
+    border: 1px solid#F1AA9B !important;
+    color: #f1aa9b !important;
+}

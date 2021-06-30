@@ -33,13 +33,11 @@ public class VhsController {
 	}
 	
 	@GetMapping
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> getAllVhses() {
 		return ResponseEntity.ok(vhsService.getAllVhses());
 	}
 	
 	@GetMapping("/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> getVhs(@PathVariable int id) {
 		Vhs vhs = vhsService.getVhs(id);
 		
