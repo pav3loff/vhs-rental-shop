@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { Link } from "react-router-dom";
+
 import { getAllVhses } from "./api/apiCalls";
 import VhsCompact from "./VhsCompact";
 
@@ -15,7 +17,9 @@ function Home(props) {
     return (
         <div className="main">
             {vhses.map((vhs) => (
-                <VhsCompact key={vhs.id} {...vhs} />
+                <Link className="link" to={"/vhses/" + vhs.id} key={vhs.id}>
+                    <VhsCompact {...vhs} />
+                </Link>
             ))}
         </div>
     );
