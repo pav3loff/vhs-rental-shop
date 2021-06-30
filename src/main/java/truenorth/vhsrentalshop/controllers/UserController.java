@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -48,10 +49,9 @@ public class UserController {
 	
 	@GetMapping("/{username}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	public ResponseEntity<?> getUser(@PathVariable String username, Principal principal) {
-		String loggedUserUsername = principal.getName();
-		
-		UserDetails userDetails = userDetailsService.loadUserByUsername(loggedUserUsername);
+	public ResponseEntity<?> getUser(@PathVariable String username,
+									 @AuthenticationPrincipal UserDetails userDetails) {
+		String loggedUserUsername = userDetails.getUsername();
 		
 		if(!(loggedUserUsername.equals(username)) && 
 				!(userDetails.getAuthorities().stream().anyMatch(
@@ -84,9 +84,14 @@ public class UserController {
 	
 	@PutMapping("/{username}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	public ResponseEntity<?> updateUser(@PathVariable String username, 
-			@Valid @RequestBody UpdateUserDto updateUserDto, Principal principal) {
-		if(!(principal.getName().equals(username))) {
+	public ResponseEntity<?> updateUser(@PathVariable String username,
+										@Valid @RequestBody UpdateUserDto updateUserDto,
+										@AuthenticationPrincipal UserDetails userDetails) {
+		String loggedUserUsername = userDetails.getUsername();
+
+		if(!(loggedUserUsername.equals(username)) &&
+				!(userDetails.getAuthorities().stream().anyMatch(
+						authority -> authority.getAuthority().equals("ROLE_ADMIN")))) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		
@@ -102,8 +107,13 @@ public class UserController {
 	
 	@DeleteMapping("/{username}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	public ResponseEntity<?> deleteUser(@PathVariable String username, Principal principal) {	
-		if(!(principal.getName().equals(username))) {
+	public ResponseEntity<?> deleteUser(@PathVariable String username,
+										@AuthenticationPrincipal UserDetails userDetails) {
+		String loggedUserUsername = userDetails.getUsername();
+
+		if(!(loggedUserUsername.equals(username)) &&
+				!(userDetails.getAuthorities().stream().anyMatch(
+						authority -> authority.getAuthority().equals("ROLE_ADMIN")))) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		

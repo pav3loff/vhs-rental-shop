@@ -1,36 +1,37 @@
 package truenorth.vhsrentalshop.controllers;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.LinkedList;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import truenorth.vhsrentalshop.model.CreateUserDto;
 import truenorth.vhsrentalshop.model.MyUserDto;
 import truenorth.vhsrentalshop.model.UpdateUserDto;
 import truenorth.vhsrentalshop.services.UserService;
+
+import java.security.Principal;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = UserController.class)
 public class UserControllerTests {
 	
 	@MockBean
 	private UserService userService;
+
+	@MockBean
+	private SecurityContext securityContext;
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -55,24 +56,23 @@ public class UserControllerTests {
 	}
 	
 	@Test
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void getUserSuccessTest() throws Exception {
 		MyUserDto myUserDto = new MyUserDto("test", "Test 1", "Test 1", new LinkedList<>());
-		
+
 		when(userService.getUser("test")).thenReturn(myUserDto);
 		
-		mockMvc.perform(get("/api/users/test"))
+		mockMvc.perform(get("/api/users/test").principal(() -> "test"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(objectMapper.writeValueAsString(myUserDto)));
-		
 	}
 	
 	@Test
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void getNonExistingUserTest() throws Exception {
 		when(userService.getUser("test")).thenReturn(null);
 		
-		mockMvc.perform(get("/api/users/test"))
+		mockMvc.perform(get("/api/users/test").principal(() -> "test"))
 			.andExpect(status().isNotFound());
 	}
 	
@@ -143,7 +143,7 @@ public class UserControllerTests {
 	}
 	
 	@Test 
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void updateUserSuccessTest() throws Exception {
 		UpdateUserDto updateUserDto = new UpdateUserDto("Test 1", "Test 1", "pass");
 		MyUserDto myUserDto = new MyUserDto("test", "Test 1", "Test 1", new LinkedList<>());
@@ -158,7 +158,7 @@ public class UserControllerTests {
 	}
 	
 	@Test 
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void updateUserWithInvalidFirstNameTest() throws Exception {
 		UpdateUserDto updateUserDto = new UpdateUserDto("", "Test 1", "pass");
 		
@@ -171,7 +171,7 @@ public class UserControllerTests {
 	}
 	
 	@Test 
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void updateUserWithInvalidLastNameTest() throws Exception {
 		UpdateUserDto updateUserDto = new UpdateUserDto("Test 1", "", "pass");
 		
@@ -184,7 +184,7 @@ public class UserControllerTests {
 	}
 	
 	@Test 
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void updateUserWithInvalidPasswordTest() throws Exception {
 		UpdateUserDto updateUserDto = new UpdateUserDto("Test 1", "Test 1", "");
 		
@@ -197,7 +197,7 @@ public class UserControllerTests {
 	}
 	
 	@Test
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void updateNonExistingUserTest() throws Exception {
 		UpdateUserDto updateUserDto = new UpdateUserDto("Test 1", "Test 1", "pass");
 		
@@ -210,7 +210,7 @@ public class UserControllerTests {
 	}
 	
 	@Test
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void deleteUserSuccessTest() throws Exception {
 		when(userService.deleteUser("test")).thenReturn(true);
 		
@@ -218,7 +218,7 @@ public class UserControllerTests {
 	}
 	
 	@Test
-	@WithMockUser(value = "test", roles = {"USER"})
+	@WithMockUser(value = "test")
 	public void deleteNonExistingUserTest() throws Exception {
 		when(userService.deleteUser("test")).thenReturn(false);
 		
