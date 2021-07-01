@@ -3,3 +3,46 @@
     font-family: "Roboto";
     color: #f1aa9b;
 }
+
+.vhs-btn {
+    font-family: Arial, Helvetica, sans-serif !important;
+    height: 30px !important;
+    margin: 0px 5px !important;
+    border: 1px solid#F1AA9B !important;
+    color: #f1aa9b !important;
+}
+
+.vhs-modal {
+    background-color: #f1aa9b;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    text-align: center;
+    top: 50%;
+    margin: 20px;
+}
+
+.vhs-modal-header-text {
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.vhs-modal-user {
+    width: 50px;
+    text-align: center;
+    background-color: #312c51;
+    color: #eeeeee;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.vhs-modal-user:hover {
+    cursor: pointer;
+    transform: translateY(2px);
+}

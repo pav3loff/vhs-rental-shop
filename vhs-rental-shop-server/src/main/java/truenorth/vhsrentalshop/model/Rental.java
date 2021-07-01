@@ -28,6 +28,7 @@ public class Rental {
 	private User user;
 	
 	@NotNull
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private LocalDateTime dateRented;
 	
 	@NotNull
@@ -36,8 +37,7 @@ public class Rental {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private LocalDateTime dateReturned;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+
 	private BigDecimal lateFee;
 
 	public Rental() {

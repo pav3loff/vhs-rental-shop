@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import { Button } from "@material-ui/core";
 
-import { login } from "./api/apiCalls";
+import { getUserInfo, login } from "./api/apiCalls";
 
 import "./Login.css";
 
@@ -19,8 +19,10 @@ function Login(props) {
 
         login(formData).then((success) => {
             if (success) {
-                localStorage.setItem("loggedUserUsername", formData.username);
-                props.setLoggedIn(true);
+                getUserInfo().then((response) => {
+                    props.setLoggedUserInfo(response);
+                    props.setLoggedIn(true);
+                });
             }
         });
     }
@@ -30,9 +32,7 @@ function Login(props) {
     ) : (
         <div className="login-main">
             <form className="form" onSubmit={handleSubmit}>
-                <label className="label" for="username">
-                    Username
-                </label>
+                <label className="label">Username</label>
                 <input
                     className="form-input"
                     id="username"
@@ -40,9 +40,7 @@ function Login(props) {
                     onChange={handleChange}
                 />
 
-                <label className="label" for="Password">
-                    Password
-                </label>
+                <label className="label">Password</label>
                 <input
                     className="form-input"
                     id="password"

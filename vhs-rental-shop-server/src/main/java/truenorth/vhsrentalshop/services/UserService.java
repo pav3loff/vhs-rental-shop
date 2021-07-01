@@ -4,6 +4,7 @@ import java.util.List;
 
 import truenorth.vhsrentalshop.model.CreateUserDto;
 import truenorth.vhsrentalshop.model.MyUserDto;
+import truenorth.vhsrentalshop.model.Role;
 import truenorth.vhsrentalshop.model.UpdateUserDto;
 
 public interface UserService {
@@ -17,5 +18,7 @@ public interface UserService {
 	MyUserDto updateUser(String username, UpdateUserDto updateUserDto);
 	
 	boolean deleteUser(String username);
+
+	Role getRole(String username);
 
 }

@@ -1,7 +1,5 @@
 package truenorth.vhsrentalshop.controllers;
 
-import java.security.Principal;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,10 +2,12 @@ package truenorth.vhsrentalshop.controllers;
 
 import javax.validation.Valid;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,6 +85,12 @@ public class VhsController {
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body(String.format("Vhs with id %d not found!", id));
+	}
+
+	@GetMapping("/{id}/available")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	public ResponseEntity<?> isAvailable(@PathVariable int id) {
+		return ResponseEntity.ok(vhsService.isAvailable(id));
 	}
 
 }

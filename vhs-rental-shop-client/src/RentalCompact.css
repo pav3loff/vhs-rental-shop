@@ -1,4 +1,4 @@
-.vhs-compact-main {
+.rental-compact-main {
     text-align: center;
     border-radius: 1px;
     margin: 15px;
@@ -11,7 +11,7 @@
     transition: all 0.2s ease-in-out;
 }
 
-.vhs-compact-main:hover {
+.rental-compact-main:hover {
     transform: translateY(2px);
 }
 

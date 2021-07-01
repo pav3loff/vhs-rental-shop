@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import truenorth.vhsrentalshop.model.Rental;
 import truenorth.vhsrentalshop.model.Vhs;
 import truenorth.vhsrentalshop.model.VhsDto;
+import truenorth.vhsrentalshop.repositories.RentalRepository;
 import truenorth.vhsrentalshop.repositories.VhsRepository;
 
 @Service
@@ -16,10 +18,13 @@ import truenorth.vhsrentalshop.repositories.VhsRepository;
 public class VhsServiceImpl implements VhsService {
 	
 	private VhsRepository vhsRepository;
+
+	private RentalRepository rentalRepository;
 	
 	@Autowired
-	public VhsServiceImpl(VhsRepository vhsRepository) {
+	public VhsServiceImpl(VhsRepository vhsRepository, RentalRepository rentalRepository) {
 		this.vhsRepository = vhsRepository;
+		this.rentalRepository = rentalRepository;
 	}
 	
 	@Override
@@ -75,6 +80,13 @@ public class VhsServiceImpl implements VhsService {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public boolean isAvailable(int id) throws IllegalArgumentException {
+		Optional<Rental> optionalRental = rentalRepository.findByVhsId(id);
+
+		return !(optionalRental.isPresent());
 	}
 
 }

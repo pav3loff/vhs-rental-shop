@@ -1,0 +1,19 @@
+.user-main {
+    text-align: center;
+    color: #312c51;
+    width: 200px;
+    height: 350px;
+    background-color: #eeeeee;
+    margin: 10px;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.user-main:hover {
+    cursor: pointer;
+    transform: translateY(2px);
+}
+
+.user-img {
+    width: 100%;
+}

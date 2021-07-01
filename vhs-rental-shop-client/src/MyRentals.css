@@ -1,19 +1,19 @@
-.home-main {
+.rentals-main {
     text-align: center;
-    text-transform: uppercase;
-}
-
-.home-header-text {
     color: #f1aa9b;
 }
 
-.home-container {
+.rentals-h1 {
+    text-transform: uppercase;
+}
+
+.rentals-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-.home-link {
+.rentals-link {
     all: unset;
 }

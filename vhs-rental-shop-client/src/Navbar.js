@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 
 import "./Navbar.css";
+import { logout } from "./api/apiCalls";
 
 function Navbar(props) {
     function handleLogout() {
-        localStorage.removeItem("loggedUserUsername");
+        logout();
         props.setLoggedIn(false);
     }
 
@@ -21,12 +22,29 @@ function Navbar(props) {
                 <div className="rightside">
                     {props.isLoggedIn ? (
                         <>
-                            <Link className="link" to="/my-rentals">
-                                <Button className="nav-btn">My rentals</Button>
+                            {props.userInfo.isAdmin ? (
+                                <Link className="link" to="/all-users">
+                                    <Button className="nav-btn">Users</Button>
+                                </Link>
+                            ) : (
+                                <Link
+                                    className="link"
+                                    to={
+                                        "/" +
+                                        props.userInfo.username +
+                                        "/my-rentals"
+                                    }
+                                >
+                                    <Button className="nav-btn">Rentals</Button>
+                                </Link>
+                            )}
+                            <Link
+                                className="link"
+                                to="/"
+                                onClick={handleLogout}
+                            >
+                                <Button className="nav-btn">Logout</Button>
                             </Link>
-                            <Button className="nav-btn" onClick={handleLogout}>
-                                Logout
-                            </Button>
                         </>
                     ) : (
                         <>

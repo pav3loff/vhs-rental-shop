@@ -1,19 +1,19 @@
-.home-main {
+.all-users-main {
     text-align: center;
-    text-transform: uppercase;
 }
 
-.home-header-text {
+.all-users-header-text {
+    text-transform: uppercase;
     color: #f1aa9b;
 }
 
-.home-container {
+.all-users-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-.home-link {
+.all-users-link {
     all: unset;
 }

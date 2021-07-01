@@ -16,4 +16,6 @@ public interface VhsService {
 	Vhs updateVhs(int id, VhsDto vhsDto);
 	
 	boolean deleteVhs(int id);
+
+	boolean isAvailable(int id);
 }

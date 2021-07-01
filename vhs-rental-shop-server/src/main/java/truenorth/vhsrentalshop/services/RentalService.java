@@ -1,6 +1,7 @@
 package truenorth.vhsrentalshop.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import truenorth.vhsrentalshop.model.Rental;
 import truenorth.vhsrentalshop.model.RentalDto;

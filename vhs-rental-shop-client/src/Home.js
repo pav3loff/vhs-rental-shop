@@ -7,7 +7,7 @@ import VhsCompact from "./VhsCompact";
 
 import "./Home.css";
 
-function Home(props) {
+function Home() {
     const [vhses, setVhses] = useState([]);
 
     useEffect(() => {
@@ -15,12 +15,19 @@ function Home(props) {
     }, []);
 
     return (
-        <div className="main">
-            {vhses.map((vhs) => (
-                <Link className="link" to={"/vhses/" + vhs.id} key={vhs.id}>
-                    <VhsCompact {...vhs} />
-                </Link>
-            ))}
+        <div className="home-main">
+            <h1 className="home-header-text">Our collection</h1>
+            <div className="home-container">
+                {vhses.map((vhs) => (
+                    <Link
+                        className="home-link"
+                        to={"/vhses/" + vhs.id}
+                        key={vhs.id}
+                    >
+                        <VhsCompact {...vhs} />
+                    </Link>
+                ))}
+            </div>
         </div>
     );
 }
