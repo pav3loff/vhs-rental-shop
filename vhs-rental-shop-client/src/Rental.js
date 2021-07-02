@@ -1,5 +1,6 @@
-import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
+
+import { Button } from "@material-ui/core";
 
 import { deleteRental, getRental, returnRental } from "./api/apiCalls";
 
@@ -67,7 +68,7 @@ function Rental(props) {
                     Return
                 </Button>
             )}
-            {showFee && <p>Late fee: {rental.lateFee}</p>}
+            {showFee && <p>Late fee: {rental.lateFee} EUR</p>}
         </div>
     );
 }

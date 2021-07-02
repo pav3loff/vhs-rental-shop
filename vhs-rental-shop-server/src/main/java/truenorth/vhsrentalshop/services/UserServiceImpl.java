@@ -108,15 +108,4 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
-	@Override
-	public Role getRole(String username) {
-		Optional<User> optionalUser = userRepository.findByUsername(username);
-
-		if(optionalUser.isPresent()) {
-			return optionalUser.get().getRole();
-		}
-
-		return null;
-	}
-
 }

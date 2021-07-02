@@ -52,8 +52,8 @@ public class RentalController {
 		}
 
 		if(!(rental.getUser().getUsername().equals(userDetails.getUsername())) &&
-				!(userDetails.getAuthorities().stream().anyMatch(
-						authority -> authority.getAuthority().equals("ROLE_ADMIN")))) {
+				userDetails.getAuthorities().stream().noneMatch(
+						authority -> authority.getAuthority().equals("ROLE_ADMIN"))) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		

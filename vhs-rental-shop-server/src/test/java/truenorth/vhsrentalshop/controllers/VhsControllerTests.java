@@ -177,5 +177,13 @@ public class VhsControllerTests {
 		
 		mockMvc.perform(delete("/api/vhses/1")).andExpect(status().isNotFound());
 	}
+
+	@Test
+	@WithMockUser(value = "test")
+	public void isVhsAvailableTest() throws Exception {
+		when(vhsService.isAvailable(1)).thenReturn(true);
+
+		mockMvc.perform(get("/api/vhses/1/available")).andExpect(status().isOk());
+	}
 	
 }

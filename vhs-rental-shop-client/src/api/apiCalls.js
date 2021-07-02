@@ -30,6 +30,29 @@ export async function login(formData) {
     return success;
 }
 
+export async function registration(formData) {
+    var success = false;
+
+    await axios({
+        url: "/api/users",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: formData,
+    })
+        .then((response) => {
+            if (response.status === STATUS_CREATED) {
+                success = true;
+            } else {
+                throw new Error("Invalid arguments!");
+            }
+        })
+        .catch(() => {});
+
+    return success;
+}
+
 export async function logout() {
     await axios({
         url: "/logout",

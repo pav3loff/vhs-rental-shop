@@ -31,24 +31,24 @@ function Login(props) {
         <Redirect to="/" />
     ) : (
         <div className="login-main">
-            <form className="form" onSubmit={handleSubmit}>
-                <label className="label">Username</label>
+            <form className="login-form" onSubmit={handleSubmit}>
+                <label className="login-label">Username</label>
                 <input
-                    className="form-input"
+                    className="login-form-input"
                     id="username"
                     value={formData.username}
                     onChange={handleChange}
                 />
 
-                <label className="label">Password</label>
+                <label className="login-label">Password</label>
                 <input
-                    className="form-input"
+                    className="login-form-input"
                     id="password"
                     value={formData.password}
                     type="password"
                     onChange={handleChange}
                 />
-                <Button className="btn-submit" type="submit">
+                <Button className="login-btn-submit" type="submit">
                     Login
                 </Button>
             </form>

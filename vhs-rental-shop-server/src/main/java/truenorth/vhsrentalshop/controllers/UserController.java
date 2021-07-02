@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +30,9 @@ public class UserController {
 	
 	private UserService userService;
 	
-	private UserDetailsService userDetailsService;
-	
 	@Autowired
-	public UserController(UserService userService, UserDetailsService userDetailsService) {
+	public UserController(UserService userService) {
 		this.userService = userService;
-		this.userDetailsService = userDetailsService;
 	}
 	
 	@GetMapping
@@ -51,9 +47,9 @@ public class UserController {
 									 @AuthenticationPrincipal UserDetails userDetails) {
 		String loggedUserUsername = userDetails.getUsername();
 		
-		if(!(loggedUserUsername.equals(username)) && 
-				!(userDetails.getAuthorities().stream().anyMatch(
-						authority -> authority.getAuthority().equals("ROLE_ADMIN")))) {
+		if(!(loggedUserUsername.equals(username)) &&
+				userDetails.getAuthorities().stream().noneMatch(
+						authority -> authority.getAuthority().equals("ROLE_ADMIN"))) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		
@@ -88,8 +84,8 @@ public class UserController {
 		String loggedUserUsername = userDetails.getUsername();
 
 		if(!(loggedUserUsername.equals(username)) &&
-				!(userDetails.getAuthorities().stream().anyMatch(
-						authority -> authority.getAuthority().equals("ROLE_ADMIN")))) {
+				userDetails.getAuthorities().stream().noneMatch(
+						authority -> authority.getAuthority().equals("ROLE_ADMIN"))) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		
@@ -110,8 +106,8 @@ public class UserController {
 		String loggedUserUsername = userDetails.getUsername();
 
 		if(!(loggedUserUsername.equals(username)) &&
-				!(userDetails.getAuthorities().stream().anyMatch(
-						authority -> authority.getAuthority().equals("ROLE_ADMIN")))) {
+				userDetails.getAuthorities().stream().noneMatch(
+						authority -> authority.getAuthority().equals("ROLE_ADMIN"))) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		

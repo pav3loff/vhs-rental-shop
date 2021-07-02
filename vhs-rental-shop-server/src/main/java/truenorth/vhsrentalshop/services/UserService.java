@@ -19,6 +19,4 @@ public interface UserService {
 	
 	boolean deleteUser(String username);
 
-	Role getRole(String username);
-
 }

@@ -10,6 +10,7 @@ import MyRentals from "./MyRentals";
 import Rental from "./Rental";
 import { getUserInfo } from "./api/apiCalls";
 import AllUsers from "./AllUsers";
+import Registration from "./Registration";
 
 function App() {
     const [isLoading, setLoading] = useState(true);
@@ -55,6 +56,11 @@ function App() {
                                 setLoggedUserInfo={setLoggedUserInfo}
                             />
                         )}
+                    />
+                    <Route
+                        exact
+                        path="/registration"
+                        render={() => <Registration />}
                     />
                     <Route
                         exact

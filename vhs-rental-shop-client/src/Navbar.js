@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 
-import "./Navbar.css";
 import { logout } from "./api/apiCalls";
+
+import "./Navbar.css";
 
 function Navbar(props) {
     function handleLogout() {
