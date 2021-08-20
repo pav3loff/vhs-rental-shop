@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+    postgres:
+        image: pav3loff/postgres:1.0
+        network_mode: host
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: 123
+            
+    springboot-app:
+        image: pav3loff/springboot-app:1.0
+        network_mode: host
+        ports:
+            - 8080:8080
+            
+    react-app:
+        image: pav3loff/react-app:1.0
+        network_mode: host
+        ports:
+            - 3000:3000

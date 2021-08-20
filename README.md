@@ -1,13 +1,12 @@
 # vhs-rental-shop
 VHS rental application management system
 
-Create Postgres DB in Docker container
-* docker pull postgres:alpine
-* docker run --name postgres -e POSTGRES_PASSWORD=123 -d -p 5432:5432 postgres:alpine
+Pull images from Dockerhub:
+* docker pull pav3loff/postgres:1.0
+* docker pull pav3loff/springboot-app:1.0
+* docker pull pav3loff/react-app:1.0
 
-Swagger API docs:
-* localhost:8080/swagger-ui.html
+Run with docker-compose:
+* docker-compose up -d
 
-Run client:
-* npm install
-* npm start
+Navigate to localhost:3000/
