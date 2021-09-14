@@ -1,4 +1,4 @@
 # vhs-rental-shop
 VHS rental application management system
 
-* Available at http://158.177.94.157/
+* Available at http://158.177.94.155/
